@@ -1,7 +1,9 @@
 package main;
 
 
-import java.lang.reflect.Method;
+import main.annotations.Component;
+import main.interfaces.MessageProvider;
+import main.interfaces.MessageRenderer;
 
 @Component("Main")
 public class Main {
@@ -12,9 +14,7 @@ public class Main {
 		//HelloWorldFactory.getInstance().getHelloWorld().helloWorld();
 
 	    ApplicationContext context = new ApplicationContext();
-	    MessageProvider provider= (MessageProvider) context.getBean("provider");
 	    MessageRenderer renderer= (MessageRenderer) context.getBean("renderer");
-	    renderer.setMessageProvider(provider);
 	    renderer.render();
     }
 

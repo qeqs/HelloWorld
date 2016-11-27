@@ -1,4 +1,6 @@
-package main;
+package main.implementations;
+
+import main.interfaces.MessageProvider;
 
 /**
  * Created on 27.11.2016.

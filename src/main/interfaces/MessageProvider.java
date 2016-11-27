@@ -1,4 +1,6 @@
-package main;
+package main.interfaces;
+
+import main.annotations.Component;
 
 /**
  * Created on 27.11.2016.

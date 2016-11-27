@@ -1,7 +1,10 @@
 package main;
 
+import main.implementations.InjectAnalyzer;
+import main.interfaces.AnnotationAnalyzer;
+
 import java.io.FileInputStream;
-import java.util.Properties;
+import java.util.ArrayList;
 
 /**
  * Created on 27.11.2016.
@@ -9,23 +12,30 @@ import java.util.Properties;
 public class ApplicationContext {
 
 
-	private Properties properties;
-	public ApplicationContext(){
-		{
-			properties = new Properties();
-			try {
-				properties.load(new FileInputStream("classes.properties"));
+	private java.util.Properties properties;
+	private ArrayList<AnnotationAnalyzer> analyzers = new ArrayList<AnnotationAnalyzer>();
 
-				String rendererClass = properties.getProperty("renderer");
-				String providerClass = properties.getProperty("provider");
-
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+	public ApplicationContext() {
+		properties = new java.util.Properties();
+		try {
+			properties.load(new FileInputStream("classes.properties"));
 		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		analyzers.add(new InjectAnalyzer(properties));
+
+
 	}
+
 	Object getBean(String proprety) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-		return Class.forName(properties.getProperty(proprety)).newInstance();
+		Object instance = Class.forName(properties.getProperty(proprety)).newInstance();
+		for (AnnotationAnalyzer analyzer : analyzers) {
+			analyzer.analyze(instance.getClass(), instance);
+		}
+		return instance;
 	}
+
+
 }

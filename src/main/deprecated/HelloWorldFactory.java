@@ -1,6 +1,5 @@
-package main;
+package main.deprecated;
 
-import java.io.*;
 /**
  * Created on 27.11.2016.
  */
