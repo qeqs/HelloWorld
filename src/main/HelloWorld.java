@@ -5,7 +5,11 @@ package main;
  */
 public class HelloWorld {
 
-	public void helloWorld(){
-		System.out.println("Hello world");
+	private String message = "Hello world";
+
+	public void setMessage(String message) {this.message = message;}
+
+	public void helloWorld() {
+		System.out.println(message);
 	}
 }
