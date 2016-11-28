@@ -5,6 +5,11 @@ import main.annotations.Component;
 import main.interfaces.MessageProvider;
 import main.interfaces.MessageRenderer;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Enumeration;
+
 @Component("Main")
 public class Main {
 
@@ -16,6 +21,7 @@ public class Main {
 	    ApplicationContext context = new ApplicationContext();
 	    MessageRenderer renderer= (MessageRenderer) context.getBean("renderer");
 	    renderer.render();
-    }
+
+	}
 
 }
