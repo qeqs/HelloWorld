@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,8 @@ public class ClassSearcher {
             String fileName = files[i];
             String className = null;
 
-            if (fileName.endsWith(".class")) {
-                className = pkgname + '.' + fileName.substring(0, fileName.length() - 6);
+            if (fileName.endsWith(".java")) {
+                className = pkgname.substring(pkgname.indexOf(".",1)+1) + '.' + fileName.substring(0, fileName.length() - 5);
             }
 
             if (className != null) {
@@ -59,6 +60,13 @@ public class ClassSearcher {
         classes.addAll(processDirectory(new File(resource.getPath()), pkgname));
 
 
+        return classes;
+    }
+    public static List<Class<?>> getClassesForPackageAndAnnotation(File directory, String pkgname,Class<? extends Annotation> annotation){
+        List<Class<?>> classes = processDirectory(directory, pkgname);
+        for(int i = 0; i<classes.size();i++)
+            if(!classes.get(i).isAnnotationPresent(annotation))
+                classes.remove(i);
         return classes;
     }
 }

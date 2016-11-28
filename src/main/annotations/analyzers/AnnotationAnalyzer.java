@@ -1,4 +1,4 @@
-package main.interfaces;
+package main.annotations.analyzers;
 
 /**
  * Created on 27.11.2016.

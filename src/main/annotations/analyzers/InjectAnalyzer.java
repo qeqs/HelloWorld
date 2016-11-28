@@ -1,7 +1,6 @@
-package main.implementations;
+package main.annotations.analyzers;
 
 import main.annotations.AutoInject;
-import main.interfaces.AnnotationAnalyzer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

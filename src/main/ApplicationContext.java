@@ -1,7 +1,8 @@
 package main;
 
-import main.implementations.InjectAnalyzer;
-import main.interfaces.AnnotationAnalyzer;
+import main.annotations.analyzers.AutowiredAnalyzer;
+import main.annotations.analyzers.InjectAnalyzer;
+import main.annotations.analyzers.AnnotationAnalyzer;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ApplicationContext {
 
 		}
 		analyzers.add(new InjectAnalyzer(properties));
-
+		analyzers.add(new AutowiredAnalyzer());
 
 	}
 

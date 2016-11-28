@@ -22,6 +22,9 @@ public class Main {
 	    MessageRenderer renderer= (MessageRenderer) context.getBean("renderer");
 	    renderer.render();
 
+	    renderer = (MessageRenderer) context.getBean("newrenderer");
+	    renderer.render();
+
 	}
 
 }
