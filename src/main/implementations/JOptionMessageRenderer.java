@@ -17,8 +17,8 @@ public class JOptionMessageRenderer implements MessageRenderer {
 	@Override
 	public void render() {
 		//JOptionPane.showConfirmDialog(null,messageProvider.getMessage());
-		JOptionPane pane = new JOptionPane(messageProvider.getMessage());
-		pane.createDialog("Message!");
+		JFrame frame = new JFrame(messageProvider.getMessage());
+		JOptionPane.showConfirmDialog(frame,messageProvider.getMessage());
 	}
 
 	@Autowired

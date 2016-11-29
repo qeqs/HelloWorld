@@ -35,7 +35,15 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 				try {
 					for (Class<?> clazz: components) {
 						//if(components.contains(method.getParameterTypes()[0]))
-						method.invoke(instance, clazz.newInstance());
+						try {
+							method.invoke(instance, clazz.newInstance());
+						}
+						catch (IllegalArgumentException e){
+
+						}
+
+						catch (InstantiationException e) {
+						}
 					}
 				}
 				catch (IllegalAccessException e) {
@@ -43,12 +51,6 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 				}
 				catch (InvocationTargetException e) {
 					e.printStackTrace();
-				}
-				catch (InstantiationException e) {
-					e.printStackTrace();
-				}
-				catch (IllegalArgumentException e){
-
 				}
 			}
 		}
