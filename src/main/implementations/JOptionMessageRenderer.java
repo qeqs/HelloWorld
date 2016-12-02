@@ -18,7 +18,8 @@ public class JOptionMessageRenderer implements MessageRenderer {
 	public void render() {
 		//JOptionPane.showConfirmDialog(null,messageProvider.getMessage());
 		JFrame frame = new JFrame(messageProvider.getMessage());
-		JOptionPane.showConfirmDialog(frame,messageProvider.getMessage());
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		JOptionPane.showConfirmDialog(frame,messageProvider.getMessage(),"Information",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 	}
 
 	@Autowired

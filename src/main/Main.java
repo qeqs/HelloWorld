@@ -24,6 +24,7 @@ public class Main {
 
 	    renderer = (MessageRenderer) context.getBean("newrenderer");
 	    renderer.render();
+		System.exit(0);
 
 	}
 
