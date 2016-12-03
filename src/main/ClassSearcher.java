@@ -1,10 +1,16 @@
 package main;
 
+import main.annotations.*;
+import main.annotations.Component;
+
+import java.awt.*;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Vadim on 28.11.2016.
@@ -28,8 +34,8 @@ public class ClassSearcher {
             String fileName = files[i];
             String className = null;
 
-            if (fileName.endsWith(".java")) {
-                className = pkgname.substring(pkgname.indexOf(".",1)+1) + '.' + fileName.substring(0, fileName.length() - 5);
+            if (fileName.endsWith(".class")) {
+                className = pkgname.substring(1) + '.' + fileName.substring(0, fileName.length() - 6);//pkgname.substring(pkgname.indexOf(".",1)+1) + '.' + fileName.substring(0, fileName.length() - 5);
             }
 
             if (className != null) {
@@ -45,7 +51,7 @@ public class ClassSearcher {
     }
 
 
-    public static List<Class<?>> getClassesForPackage(Package pkg) {
+    public static List<Class<?>> getClassesFromPackage(Package pkg) {
         ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
 
         String pkgname = pkg.getName();
@@ -62,11 +68,20 @@ public class ClassSearcher {
 
         return classes;
     }
-    public static List<Class<?>> getClassesForPackageAndAnnotation(File directory, String pkgname,Class<? extends Annotation> annotation){
+//    public static List<Class<?>> getClassesFromPackage(File directory, String pkgname, Class<? extends Annotation> annotation){
+//        List<Class<?>> classes = processDirectory(directory, pkgname);
+//        ArrayList<Class<?>> result = new ArrayList<>();
+//        for(int i = 0; i<classes.size();i++)
+//            if(classes.get(i).isAnnotationPresent(annotation))
+//                result.add(classes.get(i));
+//        return result;
+//    }
+    public static Map<String,Class<?>> getClassesFromPackage(File directory, String pkgname, Class<? extends Component> annotation){
         List<Class<?>> classes = processDirectory(directory, pkgname);
+        Map<String,Class<?>> result =new HashMap<>();
         for(int i = 0; i<classes.size();i++)
-            if(!classes.get(i).isAnnotationPresent(annotation))
-                classes.remove(i);
-        return classes;
+            if(classes.get(i).isAnnotationPresent(annotation))
+                result.put(classes.get(i).getAnnotation(annotation).value(),classes.get(i));
+        return result;
     }
 }

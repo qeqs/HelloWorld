@@ -3,6 +3,7 @@ package main.deprecated;
 /**
  * Created on 27.11.2016.
  */
+@Deprecated
 public class HelloWorldFactory {
 	private static HelloWorldFactory instance;
 

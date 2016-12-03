@@ -11,7 +11,7 @@ import java.awt.*;
 /**
  * Created on 28.11.2016.
  */
-@Component("joption")
+@Component("jOption")
 public class JOptionMessageRenderer implements MessageRenderer {
 	MessageProvider messageProvider;
 	@Override

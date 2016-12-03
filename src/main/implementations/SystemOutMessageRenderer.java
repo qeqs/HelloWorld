@@ -20,6 +20,7 @@ public class SystemOutMessageRenderer implements MessageRenderer {
 	}
 
 	@AutoInject("provider")
+	@Autowired
 	@Override
 	public void setMessageProvider(MessageProvider provider) {
 		messageProvider = provider;
