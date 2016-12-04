@@ -11,10 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Main {
 
     public static void main(String[] args)  {
-	// write your code here
-
 		//HelloWorldFactory.getInstance().getHelloWorld().helloWorld();
-
 //	    ApplicationContext context = new ApplicationContext();
 //	    MessageRenderer renderer= (MessageRenderer) context.getBean("renderer");
 //	    renderer.render();
@@ -23,10 +20,9 @@ public class Main {
 //	    renderer.render();
 	    try {
 		    MessageRenderer renderer = (MessageRenderer) Context.getInstance().getBean("system.out");
-		    renderer.render();
-
+		    //renderer.render();
 		    renderer = (MessageRenderer) Context.getInstance().getBean("jOption");
-		    renderer.render();
+		    //renderer.render();
 	    }
 	    catch (Exception e) {
 		    e.printStackTrace();

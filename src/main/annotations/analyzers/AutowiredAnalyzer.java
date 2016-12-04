@@ -6,6 +6,7 @@ import main.Context;
 import main.annotations.AutoInject;
 import main.annotations.Autowired;
 import main.annotations.Component;
+import main.annotations.Qualifier;
 
 import java.io.File;
 import java.lang.reflect.*;
@@ -24,9 +25,9 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 
 	@Override
 	public void analyze(Class<?> cl, Object instance) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InvocationTargetException {
-		Method[] methods = cl.getMethods();
-		Field[] fields = cl.getFields();
-		Constructor<?>[] constructors = cl.getConstructors();
+		Method[] methods = cl.getDeclaredMethods();
+		Field[] fields = cl.getDeclaredFields();
+		Constructor<?>[] constructors = cl.getDeclaredConstructors();
 		for (Method method : methods) {
 			if (method.isAnnotationPresent(Autowired.class)) {
 
@@ -37,14 +38,20 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 
 				for (Class<?> type : method.getParameterTypes()) {
 
-					if (Context.getInstance().getComponents().containsValue(type)){
-						if(!type.isInterface()) {
-							params.add(Context.getInstance().getBean(type));
-						}
+					if(type.isAnnotationPresent(Qualifier.class)) {
+						Qualifier qualifier = type.getAnnotation(Qualifier.class);
+						if(qualifier.name().equals(""))
+							params.add(Context.getInstance().getBean(qualifier.clazz()));
 						else
-						{
-							for (Object entry:((HashMap)Context.getInstance().getComponents()).values()) {
-								if(!((Class<?>)entry).isInterface()&&type.isAssignableFrom(((Class<?>)entry))) {
+							params.add(Context.getInstance().getBean(qualifier.name()));
+					}
+					else
+					if (Context.getInstance().getComponents().containsValue(type)) {
+						if (!type.isInterface()) {
+							params.add(Context.getInstance().getBean(type));
+						} else {
+							for (Object entry : ((HashMap) Context.getInstance().getComponents()).values()) {
+								if (!((Class<?>) entry).isInterface() && type.isAssignableFrom(((Class<?>) entry))) {
 									params.add(Context.getInstance().getBean((Class<?>) entry));
 									break;
 								}
@@ -64,7 +71,14 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 
 				int modifiers = field.getModifiers();
 				field.setAccessible(true);
-
+				if(field.isAnnotationPresent(Qualifier.class)) {
+					Qualifier qualifier = field.getAnnotation(Qualifier.class);
+					if(qualifier.name().equals(""))
+						field.set(instance,Context.getInstance().getBean(qualifier.clazz()));
+					else
+						field.set(instance,Context.getInstance().getBean(qualifier.name()));
+				}
+				else
 				if (!field.getType().isInterface()) field.set(instance, Context.getInstance().getBean(field.getType()));
 				else
 				{
@@ -75,7 +89,6 @@ public class AutowiredAnalyzer implements AnnotationAnalyzer {
 						}
 					}
 				}
-				//else field.set(instance, Context.getInstance().getBean(field.getType().getDeclaredClasses()[0]));
 
 				if(Modifier.isPrivate(modifiers)||Modifier.isProtected(modifiers))
 					field.setAccessible(false);

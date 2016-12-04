@@ -78,7 +78,7 @@ public class ClassSearcher {
 //    }
     public static Map<String,Class<?>> getClassesFromPackage(File directory, String pkgname, Class<? extends Component> annotation){
         List<Class<?>> classes = processDirectory(directory, pkgname);
-        Map<String,Class<?>> result =new HashMap<>();
+        Map<String,Class<?>> result =new HashMap<String, Class<?>>();
         for(int i = 0; i<classes.size();i++)
             if(classes.get(i).isAnnotationPresent(annotation))
                 result.put(classes.get(i).getAnnotation(annotation).value(),classes.get(i));

@@ -3,6 +3,7 @@ package main;
 import main.annotations.Component;
 import main.annotations.analyzers.AnnotationAnalyzer;
 import main.annotations.analyzers.AutowiredAnalyzer;
+import main.annotations.analyzers.PostConstructAnalyzer;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -23,9 +24,10 @@ public class Context {
 	private Context() {
 
 
-		components =  ClassSearcher.getClassesFromPackage(new File("out\\production\\springTest\\"),"", Component.class);
+		components =  ClassSearcher.getClassesFromPackage(new File("out\\production\\springTest\\classes\\"),"", Component.class);
 		//analyzers.add(new InjectAnalyzer(properties));
 		analyzers.add(new AutowiredAnalyzer());
+		analyzers.add(new PostConstructAnalyzer());
 	}
 
 	public static Context getInstance() {

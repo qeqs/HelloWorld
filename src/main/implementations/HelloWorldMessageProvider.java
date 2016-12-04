@@ -1,6 +1,8 @@
 package main.implementations;
 
+import main.HelloWorldComparator;
 import main.annotations.Component;
+import main.annotations.ValidateString;
 import main.interfaces.MessageProvider;
 
 /**
@@ -8,8 +10,16 @@ import main.interfaces.MessageProvider;
  */
 @Component("helloWorld")
 public class HelloWorldMessageProvider implements MessageProvider {
-	@Override
+
+	private String message;
 	public String getMessage() {
-		return "Hello World";
+		return message;
+	}
+
+	public void setMessage(@ValidateString(comparator = HelloWorldComparator.class,value = "Hello World")String message) {
+		this.message = message;
+	}
+	public HelloWorldMessageProvider(){
+		setMessage("Hello World");
 	}
 }
