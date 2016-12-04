@@ -1,7 +1,7 @@
 package main;
 
+
 import main.annotations.*;
-import main.annotations.Component;
 
 import java.awt.*;
 import java.io.File;
@@ -76,7 +76,7 @@ public class ClassSearcher {
 //                result.add(classes.get(i));
 //        return result;
 //    }
-    public static Map<String,Class<?>> getClassesFromPackage(File directory, String pkgname, Class<? extends Component> annotation){
+    public static Map<String,Class<?>> getClassesFromPackage(File directory, String pkgname, Class<main.annotations.Component> annotation){
         List<Class<?>> classes = processDirectory(directory, pkgname);
         Map<String,Class<?>> result =new HashMap<String, Class<?>>();
         for(int i = 0; i<classes.size();i++)
